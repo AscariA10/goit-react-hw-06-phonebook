@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact } from '../redux/contactSlice';
 
 import { useState } from 'react';
 import { Formik } from 'formik';
@@ -8,9 +10,14 @@ export const ContactInputForm = ({ onFormSubmit }) => {
    const [name, setName] = useState('');
    const [number, setNumber] = useState('');
 
+   // redux
+   const dispatch = useDispatch();
+
    function formSubmit(event) {
       event.preventDefault();
-      onFormSubmit({ name, number });
+      dispatch(addContact({ name, number }));
+
+      // onFormSubmit({ name, number });
       setName('');
       setNumber('');
    }
@@ -30,6 +37,7 @@ export const ContactInputForm = ({ onFormSubmit }) => {
 
    return (
       <Formik initialValues={name}>
+         {/* <Form onSubmit={formSubmit}> */}
          <Form onSubmit={formSubmit}>
             <FieldLabel>
                Name
@@ -37,8 +45,8 @@ export const ContactInputForm = ({ onFormSubmit }) => {
                   name="name"
                   type="text"
                   value={name}
-                  pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                  title="Name may contain only letters, apostrophe, dash and spaces."
+                  // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                  // title="Name may contain only letters, apostrophe, dash and spaces."
                   onChange={onChangeFunction}
                   required
                />
@@ -49,8 +57,8 @@ export const ContactInputForm = ({ onFormSubmit }) => {
                   type="tel"
                   name="number"
                   value={number}
-                  pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                  title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                  // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                  // title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                   required
                   onChange={onChangeFunction}
                />
@@ -60,6 +68,8 @@ export const ContactInputForm = ({ onFormSubmit }) => {
       </Formik>
    );
 };
+
+// () => dispatch(addContact({ name, number }))
 
 // export class ContactInputForm extends Component {
 //    state = {

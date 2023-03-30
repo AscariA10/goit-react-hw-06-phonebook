@@ -1,16 +1,29 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteContact } from '../redux/contactSlice';
+
 import PropTypes from 'prop-types';
 import { DeleteButton, ContactElement, ContactListMarkup } from './ContactList.styled';
 
-export const ContactList = ({ deleteHandler, contactList }) => {
+export const ContactList = () => {
+   // redux
+   const dispatch = useDispatch();
+   const contactListRedux = useSelector(state => state.contacts);
+   console.log();
+
+   // redux
+
    return (
       <>
          <p>Contacts</p>
          <ContactListMarkup>
-            {contactList.map((element, index) => {
+            {contactListRedux.map((element, index) => {
                return (
                   <ContactElement key={index}>
                      {element.name}: {element.number}
-                     <DeleteButton type="button" onClick={() => deleteHandler(element.name)}>
+                     <DeleteButton
+                        type="button"
+                        onClick={() => dispatch(deleteContact(element.name))}
+                     >
                         Delete
                      </DeleteButton>
                   </ContactElement>

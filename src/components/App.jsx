@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Provider } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { store } from './redux/store';
 
 import { ContactInputForm } from './ContactInputForm/ContactInputForm';
 import { ContactList } from './ContactList/ContactList';
@@ -51,11 +55,13 @@ export const App = () => {
    }
 
    return (
-      <Wrapper>
-         <ContactInputForm onFormSubmit={onFormSubmit} />
-         <FilterForm onFilter={onFilter} />
-         <ContactList contactList={filteredData()} deleteHandler={deleteHandler} />
-      </Wrapper>
+      <Provider store={store}>
+         <Wrapper>
+            <ContactInputForm onFormSubmit={onFormSubmit} />
+            <FilterForm onFilter={onFilter} />
+            <ContactList contactList={filteredData()} deleteHandler={deleteHandler} />
+         </Wrapper>
+      </Provider>
    );
 };
 
