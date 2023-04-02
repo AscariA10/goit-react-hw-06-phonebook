@@ -7,8 +7,13 @@ import { DeleteButton, ContactElement, ContactListMarkup } from './ContactList.s
 export const ContactList = () => {
    // redux
    const dispatch = useDispatch();
-   const contactListRedux = useSelector(state => state.contacts);
-   console.log();
+   const contactList = useSelector(state => state.contacts);
+   const filteredQuery = useSelector(state => state.filters);
+
+   const filteredList = contactList?.filter(element =>
+      element.name?.toLowerCase().includes(filteredQuery)
+   );
+   console.log(filteredList);
 
    // redux
 
@@ -16,7 +21,7 @@ export const ContactList = () => {
       <>
          <p>Contacts</p>
          <ContactListMarkup>
-            {contactListRedux.map((element, index) => {
+            {(filteredList.length > 0 ? filteredList : contactList).map((element, index) => {
                return (
                   <ContactElement key={index}>
                      {element.name}: {element.number}

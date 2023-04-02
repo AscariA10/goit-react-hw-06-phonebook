@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Provider } from 'react-redux';
-import { useSelector, useDispatch } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import { store } from './redux/store';
+import { store, persistor } from './redux/store';
 
 import { ContactInputForm } from './ContactInputForm/ContactInputForm';
 import { ContactList } from './ContactList/ContactList';
@@ -37,12 +37,12 @@ export const App = () => {
       filterContacts(filter);
    }
 
-   function filteredData() {
-      if (filter.length > 0) {
-         return filterContacts(filter);
-      }
-      return contacts;
-   }
+   // function filteredData() {
+   //    if (filter.length > 0) {
+   //       return filterContacts(filter);
+   //    }
+   //    return contacts;
+   // }
 
    function filterContacts(contactInfo) {
       return contacts.filter(element =>
@@ -50,17 +50,15 @@ export const App = () => {
       );
    }
 
-   function deleteHandler(contact) {
-      setContacts(...[contacts.filter(element => element.name !== contact)]);
-   }
-
    return (
       <Provider store={store}>
-         <Wrapper>
-            <ContactInputForm onFormSubmit={onFormSubmit} />
-            <FilterForm onFilter={onFilter} />
-            <ContactList contactList={filteredData()} deleteHandler={deleteHandler} />
-         </Wrapper>
+         <PersistGate loading={null} persistor={persistor}>
+            <Wrapper>
+               <ContactInputForm onFormSubmit={onFormSubmit} />
+               <FilterForm onFilter={onFilter} />
+               <ContactList />
+            </Wrapper>
+         </PersistGate>
       </Provider>
    );
 };

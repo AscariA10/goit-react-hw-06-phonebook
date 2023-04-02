@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addContact } from '../redux/contactSlice';
 
 import { useState } from 'react';
 import { Formik } from 'formik';
 import { Form, Field, FieldLabel, FormButton } from './ContactInputForm.styled';
 
-export const ContactInputForm = ({ onFormSubmit }) => {
+export const ContactInputForm = () => {
    const [name, setName] = useState('');
    const [number, setNumber] = useState('');
 
@@ -16,8 +16,6 @@ export const ContactInputForm = ({ onFormSubmit }) => {
    function formSubmit(event) {
       event.preventDefault();
       dispatch(addContact({ name, number }));
-
-      // onFormSubmit({ name, number });
       setName('');
       setNumber('');
    }
@@ -37,7 +35,6 @@ export const ContactInputForm = ({ onFormSubmit }) => {
 
    return (
       <Formik initialValues={name}>
-         {/* <Form onSubmit={formSubmit}> */}
          <Form onSubmit={formSubmit}>
             <FieldLabel>
                Name

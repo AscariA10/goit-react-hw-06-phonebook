@@ -1,14 +1,23 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { filterContacts } from '../redux/filterSlice';
 
 export const FilterForm = ({ onFilter }) => {
    const [filterText, setFilterText] = useState('');
+
+   const dispatch = useDispatch();
+
+   // redux
+   // const dispatch = useDispatch();
+   // const filteredList = useSelector(state => state.contacts);
 
    useEffect(() => {
       onFilter(filterText);
    }, [filterText, onFilter]);
 
    function onFilterInput(event) {
+      dispatch(filterContacts(event.target.value));
       setFilterText(event.target.value);
    }
 
