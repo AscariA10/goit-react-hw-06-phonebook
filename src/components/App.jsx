@@ -1,41 +1,35 @@
-import { useState, useEffect } from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-
-import { store, persistor } from './redux/store';
-
 import { ContactInputForm } from './ContactInputForm/ContactInputForm';
 import { ContactList } from './ContactList/ContactList';
 import { FilterForm } from './FilterForm/FilterForm';
 import { Wrapper } from './App.styled';
 
 export const App = () => {
-   const savedContactList = JSON.parse(localStorage.getItem('saved-contact-list'));
+   // const savedContactList = JSON.parse(localStorage.getItem('saved-contact-list'));
 
-   const [contacts, setContacts] = useState(savedContactList ?? []);
-   const [filter, setFilter] = useState('');
+   // const [contacts, setContacts] = useState(savedContactList ?? []);
+   // const [filter, setFilter] = useState('');
 
-   useEffect(() => {
-      localStorage.setItem('saved-contact-list', JSON.stringify(contacts));
-   }, [contacts.length, contacts]);
+   // useEffect(() => {
+   //    localStorage.setItem('saved-contact-list', JSON.stringify(contacts));
+   // }, [contacts.length, contacts]);
 
-   function onFormSubmit(data) {
-      if (contactCheck(data.name)) {
-         return alert(`${data.name} alredy in contacts`);
-      }
-      setContacts(prevState => [data, ...prevState]);
-   }
+   // function onFormSubmit(data) {
+   //    if (contactCheck(data.name)) {
+   //       return alert(`${data.name} alredy in contacts`);
+   //    }
+   //    setContacts(prevState => [data, ...prevState]);
+   // }
 
-   function contactCheck(uncheckedContact) {
-      return contacts.some(element => {
-         return element.name === uncheckedContact;
-      });
-   }
+   // function contactCheck(uncheckedContact) {
+   //    return contacts.some(element => {
+   //       return element.name === uncheckedContact;
+   //    });
+   // }
 
-   function onFilter(data) {
-      setFilter(data);
-      filterContacts(filter);
-   }
+   // function onFilter(data) {
+   //    setFilter(data);
+   //    filterContacts(filter);
+   // }
 
    // function filteredData() {
    //    if (filter.length > 0) {
@@ -44,22 +38,18 @@ export const App = () => {
    //    return contacts;
    // }
 
-   function filterContacts(contactInfo) {
-      return contacts.filter(element =>
-         element.name.toLowerCase().includes(contactInfo.toLowerCase())
-      );
-   }
+   // function filterContacts(contactInfo) {
+   //    return contacts.filter(element =>
+   //       element.name.toLowerCase().includes(contactInfo.toLowerCase())
+   //    );
+   // }
 
    return (
-      <Provider store={store}>
-         <PersistGate loading={null} persistor={persistor}>
-            <Wrapper>
-               <ContactInputForm onFormSubmit={onFormSubmit} />
-               <FilterForm onFilter={onFilter} />
-               <ContactList />
-            </Wrapper>
-         </PersistGate>
-      </Provider>
+      <Wrapper>
+         <ContactInputForm />
+         <FilterForm />
+         <ContactList />
+      </Wrapper>
    );
 };
 

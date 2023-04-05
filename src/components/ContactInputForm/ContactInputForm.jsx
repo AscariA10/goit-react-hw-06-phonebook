@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../redux/contactSlice';
 
 import { useState } from 'react';
@@ -10,14 +10,25 @@ export const ContactInputForm = () => {
    const [name, setName] = useState('');
    const [number, setNumber] = useState('');
 
+   const contactList = useSelector(state => state.contacts);
+
    // redux
    const dispatch = useDispatch();
 
    function formSubmit(event) {
       event.preventDefault();
+      if (contactCheck(name)) {
+         return alert(`${name} alredy in contacts`);
+      }
       dispatch(addContact({ name, number }));
       setName('');
       setNumber('');
+   }
+
+   function contactCheck(uncheckedContact) {
+      return contactList.some(element => {
+         return element.name.toLowerCase() === uncheckedContact.toLowerCase();
+      });
    }
 
    function onChangeFunction(event) {
